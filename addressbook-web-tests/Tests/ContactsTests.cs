@@ -68,7 +68,7 @@ namespace addressbook_web_tests
 
         private void OpenLoginPage()
         {
-            driver.Navigate().GoToUrl(baseURL + "/addressbook/");
+            driver.Navigate().GoToUrl(baseURL + "addressbook/");
         }
 
         private void Login(AccountData account)
