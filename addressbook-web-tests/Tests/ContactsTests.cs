@@ -23,11 +23,11 @@ namespace addressbook_web_tests.Tests
         [Test]
         public void ContactCreationTest()
         {
-            GoToHomePage();
-            Login(new AccountData("admin", "secret"));
-            InitContactCreation();            
-            FillContactForm(contact);
-            SubmitContactCreation();            
+            navigator.GoToHomePage();
+            session.Login(new AccountData("admin", "secret"));
+            contactHelper.InitContactCreation();
+            contactHelper.FillContactForm(contact);
+            contactHelper.SubmitContactCreation();            
         }                              
                 
     }

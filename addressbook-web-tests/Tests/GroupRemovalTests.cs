@@ -9,22 +9,12 @@ namespace addressbook_web_tests
         [Test]
         public void GroupRemoveTest()
         {
-            GoToHomePage();
-            Login(new AccountData("admin", "secret"));
-            GoToGroupsPage();
-            SelectGroup(1);
-            DeleteGroup();
-            ReturnToGroupsPage();
-        }
-
-        private void SelectGroup(int index)
-        {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])["+ index +"]")).Click();            
-        }
-
-        private void DeleteGroup()
-        {
-            driver.FindElement(By.Name("delete")).Click();
-        }
+            navigator.GoToHomePage();
+            session.Login(new AccountData("admin", "secret"));
+            navigator.GoToGroupsPage();
+            groupHelper.SelectGroup(1);
+            groupHelper.DeleteGroup();
+            navigator.ReturnToGroupsPage();
+        }        
     }
 }
