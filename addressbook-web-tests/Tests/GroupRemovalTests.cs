@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
-using OpenQA.Selenium;
 
-namespace addressbook_web_tests
+namespace AddressbookWebTests
 {
     [TestFixture]
     public class GroupRemovalTests : TestBase
@@ -9,12 +8,12 @@ namespace addressbook_web_tests
         [Test]
         public void GroupRemoveTest()
         {
-            navigator.GoToHomePage();
-            session.Login(new AccountData("admin", "secret"));
-            navigator.GoToGroupsPage();
-            groupHelper.SelectGroup(1);
-            groupHelper.DeleteGroup();
-            navigator.ReturnToGroupsPage();
+            mngr.Navigator.GoToHomePage();
+            mngr.Auth.Login(new AccountData("admin", "secret"));
+            mngr.Navigator.GoToGroupsPage();
+            mngr.GroupHelper.SelectGroup(1);
+            mngr.GroupHelper.DeleteGroup();
+            mngr.Navigator.ReturnToGroupsPage();
         }        
     }
 }

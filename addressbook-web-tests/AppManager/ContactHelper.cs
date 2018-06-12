@@ -1,14 +1,12 @@
 ﻿using OpenQA.Selenium;
 
-namespace addressbook_web_tests
+namespace AddressbookWebTests
 {
-    public class ContactHelper
+    public class ContactHelper : HelperBase
     {
-        private IWebDriver driver;        
-
-        public ContactHelper(IWebDriver driver)
-        {
-            this.driver = driver;            
+        
+        public ContactHelper(IWebDriver driver) : base(driver)
+        {                    
         }
 
         public void InitContactCreation()

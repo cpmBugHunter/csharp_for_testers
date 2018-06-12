@@ -1,10 +1,6 @@
 ﻿using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
-using System;
-using System.Text;
 
-namespace addressbook_web_tests.Tests
+namespace AddressbookWebTests
 {
     [TestFixture]
     public class ContactsTests : TestBase
@@ -23,11 +19,11 @@ namespace addressbook_web_tests.Tests
         [Test]
         public void ContactCreationTest()
         {
-            navigator.GoToHomePage();
-            session.Login(new AccountData("admin", "secret"));
-            contactHelper.InitContactCreation();
-            contactHelper.FillContactForm(contact);
-            contactHelper.SubmitContactCreation();            
+            mngr.Navigator.GoToHomePage();
+            mngr.Auth.Login(new AccountData("admin", "secret"));
+            mngr.ContactHelper.InitContactCreation();
+            mngr.ContactHelper.FillContactForm(contact);
+            mngr.ContactHelper.SubmitContactCreation();            
         }                              
                 
     }

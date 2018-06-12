@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 
-namespace addressbook_web_tests
+namespace AddressbookWebTests
 {
-    public class SessionHelper
-    {
-        private IWebDriver driver;
+    public class SessionHelper : HelperBase
+    {        
 
-        public SessionHelper(IWebDriver driver)
-        {
-            this.driver = driver;
+        public SessionHelper(IWebDriver driver) : base(driver)
+        {            
         }
 
         public void Login(AccountData account)
