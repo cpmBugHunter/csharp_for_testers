@@ -21,9 +21,9 @@ namespace AddressbookWebTests
         {
             mngr.Navigator.GoToHomePage();
             mngr.Auth.Login(new AccountData("admin", "secret"));
-            mngr.ContactHelper.InitContactCreation();
-            mngr.ContactHelper.FillContactForm(contact);
-            mngr.ContactHelper.SubmitContactCreation();            
+            mngr.Contact.InitContactCreation();
+            mngr.Contact.FillContactForm(contact);
+            mngr.Contact.SubmitContactCreation();            
         }                              
                 
     }

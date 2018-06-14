@@ -4,30 +4,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 
 namespace AddressbookWebTests
 
 {
     public class ApplicationManager
     {
-        protected IWebDriver driver;        
-        protected string baseURL;
-        private SessionHelper session;
-        private ContactHelper contactHelper;
-        private GroupHelper groupHelper;
-        private NavigationHelper navigator;
+        protected IWebDriver driver;
+        private string baseURL;
+        protected SessionHelper session;
+        protected ContactHelper contactHelper;
+        protected GroupHelper groupHelper;
+        protected NavigationHelper navigator;
 
         public SessionHelper Auth { get => session; set => session = value; }
-        public ContactHelper ContactHelper { get => contactHelper; set => contactHelper = value; }
-        public GroupHelper GroupHelper { get => groupHelper; set => groupHelper = value; }
+        public ContactHelper Contact { get => contactHelper; set => contactHelper = value; }
+        public GroupHelper Group { get => groupHelper; set => groupHelper = value; }
         public NavigationHelper Navigator { get => navigator; set => navigator = value; }
+        public IWebDriver Driver { get => driver; set => driver = value; }
+        public string BaseURL { get => baseURL; set => baseURL = value; }
 
         public ApplicationManager()
         {
-            Auth = session;
-            ContactHelper = contactHelper;
-            GroupHelper = groupHelper;
-            Navigator = navigator;
+            driver = new ChromeDriver();
+            baseURL = "http://localhost";
+            session = new SessionHelper(this);
+            contactHelper = new ContactHelper(this);
+            groupHelper = new GroupHelper(this);
+            navigator = new NavigationHelper(this);
         }
 
         public void Stop()

@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using OpenQA.Selenium;
 
 namespace AddressbookWebTests
 {
@@ -6,16 +7,34 @@ namespace AddressbookWebTests
     {
         
 
-        public GroupHelper(IWebDriver driver) : base(driver)
+        public GroupHelper(ApplicationManager manager) : base(manager)
         {            
         }
 
-        public void InitGroupCreation()
+        public void Remove(int index)
         {
-            driver.FindElement(By.Name("new")).Click();
+            manager.Navigator.GoToGroupsPage();
+            Select(index);
+            Delete();
+            manager.Navigator.ReturnToGroupsPage();
         }
 
-        public void FillGroupForm(GroupData group)
+        public GroupHelper Create(GroupData group)
+        {
+            manager.Navigator.GoToGroupsPage();
+            InitCreation();
+            FillForm(group);
+            SubmitCreation();
+            return this;
+        }
+
+        public GroupHelper InitCreation()
+        {
+            driver.FindElement(By.Name("new")).Click();
+            return this;
+        }
+
+        public GroupHelper FillForm(GroupData group)
         {
             driver.FindElement(By.Name("group_name")).Clear();
             driver.FindElement(By.Name("group_name")).SendKeys(group.Name);
@@ -29,22 +48,25 @@ namespace AddressbookWebTests
                 driver.FindElement(By.Name("group_footer")).Clear();
                 driver.FindElement(By.Name("group_footer")).SendKeys(group.Footer);
             }
+            return this;
         }
 
-        public void SubmitGroupCreation()
+        public GroupHelper SubmitCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
-
+            return this;
         }
 
-        public void SelectGroup(int index)
+        public GroupHelper Select(int index)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            return this;
         }
 
-        public void DeleteGroup()
+        public GroupHelper Delete()
         {
             driver.FindElement(By.Name("delete")).Click();
+            return this;
         }
     }
 }

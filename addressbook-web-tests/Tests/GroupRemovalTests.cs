@@ -8,11 +8,11 @@ namespace AddressbookWebTests
         [Test]
         public void GroupRemoveTest()
         {
-            mngr.Navigator.GoToHomePage();
-            mngr.Auth.Login(new AccountData("admin", "secret"));
+            mngr.Group.Remove(1);
             mngr.Navigator.GoToGroupsPage();
-            mngr.GroupHelper.SelectGroup(1);
-            mngr.GroupHelper.DeleteGroup();
+            mngr.Group
+                .Select(1)
+                .Delete();
             mngr.Navigator.ReturnToGroupsPage();
         }        
     }
