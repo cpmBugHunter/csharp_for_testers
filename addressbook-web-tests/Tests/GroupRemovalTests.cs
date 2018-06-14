@@ -8,12 +8,7 @@ namespace AddressbookWebTests
         [Test]
         public void GroupRemoveTest()
         {
-            mngr.Group.Remove(1);
-            mngr.Navigator.GoToGroupsPage();
-            mngr.Group
-                .Select(1)
-                .Delete();
-            mngr.Navigator.ReturnToGroupsPage();
+            mngr.Group.Remove(1);           
         }        
     }
 }
