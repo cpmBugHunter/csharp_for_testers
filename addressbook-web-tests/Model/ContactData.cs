@@ -8,17 +8,21 @@ namespace AddressbookWebTests
 {
     public class ContactData
     {
-        private string name;
-        private string middleName;
-        private string lastName;
-        private string company;
-        private string address;
-        private string homePhone;
-        private string workPhone;
-        private string mobilePhone;
-        private string eMail;
-        private string eMail2;
-        private string eMail3;
+        private string name = "";
+        private string middleName = "";
+        private string lastName = "";
+        private string company = "";
+        private string address = "";
+        private string homePhone = "";
+        private string workPhone = "";
+        private string mobilePhone = "";
+        private string eMail = "";
+        private string eMail2 = "";
+        private string eMail3 = "";
+
+        public ContactData()
+        {
+        }
 
         public ContactData(string name,            
             string lastName,            
@@ -30,17 +34,17 @@ namespace AddressbookWebTests
             string eMail2,
             string eMail3)
         {
-            this.Name = name;
-            this.MiddleName = middleName;
-            this.LastName = lastName;
-            this.Company = company;
-            this.Address = address;
-            this.HomePhone = homePhone;
-            this.WorkPhone = workPhone;
-            this.MobilePhone = mobilePhone;
-            this.EMail = eMail;
-            this.EMail2 = eMail2;
-            this.EMail3 = eMail3;
+            Name = name;
+            MiddleName = middleName;
+            LastName = lastName;
+            Company = company;
+            Address = address;
+            HomePhone = homePhone;
+            WorkPhone = workPhone;
+            MobilePhone = mobilePhone;
+            EMail = eMail;
+            EMail2 = eMail2;
+            EMail3 = eMail3;
         }
 
         public string Name { get => name; set => name = value; }

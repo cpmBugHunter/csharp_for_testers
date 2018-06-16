@@ -3,7 +3,7 @@
 namespace AddressbookWebTests
 {
     [TestFixture]
-    public class ContactsTests : TestBase
+    public class ContactsCreationTests : TestBase
     {
         ContactData contact = new ContactData("John",
                 "Galt",
@@ -19,11 +19,9 @@ namespace AddressbookWebTests
         [Test]
         public void ContactCreationTest()
         {
-            mngr.Navigator.GoToHomePage();
-            mngr.Auth.Login(new AccountData("admin", "secret"));
-            mngr.Contact.InitContactCreation();
-            mngr.Contact.FillContactForm(contact);
-            mngr.Contact.SubmitContactCreation();            
+            mngr.Contact.InitCreation();
+            mngr.Contact.FillForm(contact);
+            mngr.Contact.SubmitCreation();            
         }                              
                 
     }
