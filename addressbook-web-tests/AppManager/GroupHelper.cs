@@ -47,20 +47,18 @@ namespace AddressbookWebTests
 
         public GroupHelper FillForm(GroupData group)
         {
-            driver.FindElement(By.Name("group_name")).Clear();
-            driver.FindElement(By.Name("group_name")).SendKeys(group.Name);
-            if (!string.IsNullOrWhiteSpace(group.Header))
+            
+            Type(By.Name("group_name"), group.Name);
+            if (!string.IsNullOrEmpty(group.Header))
             {
-                driver.FindElement(By.Name("group_header")).Clear();
-                driver.FindElement(By.Name("group_header")).SendKeys(group.Header);
+                Type(By.Name("group_header"), group.Header);                
             }
-            if (!string.IsNullOrWhiteSpace(group.Footer))
+            if (!string.IsNullOrEmpty(group.Footer))
             {
-                driver.FindElement(By.Name("group_footer")).Clear();
-                driver.FindElement(By.Name("group_footer")).SendKeys(group.Footer);
+                Type(By.Name("group_footer"), group.Footer);                
             }
             return this;
-        }
+        }        
 
         public GroupHelper SubmitCreation()
         {

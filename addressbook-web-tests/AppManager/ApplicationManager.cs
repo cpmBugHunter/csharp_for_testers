@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
+using System;
+using System.Threading;
 
 namespace AddressbookWebTests
 
@@ -19,6 +15,9 @@ namespace AddressbookWebTests
         protected GroupHelper groupHelper;
         protected NavigationHelper navigator;
 
+        //делаем менеджера многопоточным
+        private static ThreadLocal<ApplicationManager> mngr = new ThreadLocal<ApplicationManager>();
+
         public SessionHelper Auth { get => session; set => session = value; }
         public ContactHelper Contact { get => contactHelper; set => contactHelper = value; }
         public GroupHelper Group { get => groupHelper; set => groupHelper = value; }
@@ -26,7 +25,8 @@ namespace AddressbookWebTests
         public IWebDriver Driver { get => driver; set => driver = value; }
         public string BaseURL { get => baseURL; set => baseURL = value; }
 
-        public ApplicationManager()
+        //спрятали конструктор, чтобы вызывать его только через GetInstance()
+        private ApplicationManager()
         {
             driver = new FirefoxDriver();
             baseURL = "http://localhost";
@@ -36,7 +36,8 @@ namespace AddressbookWebTests
             navigator = new NavigationHelper(this);
         }
 
-        public void Stop()
+        //destructor вызывается автоматически
+        ~ApplicationManager()
         {
             try
             {
@@ -47,5 +48,16 @@ namespace AddressbookWebTests
                 // Ignore errors if unable to close the browser
             }
         }
+
+        //Создаем менеджера для каждого потока
+        public static ApplicationManager GetInstance()
+        {
+            if(!mngr.IsValueCreated)
+            {
+                mngr.Value = new ApplicationManager();
+            }
+            return mngr.Value;
+        }
+        
     }
 }

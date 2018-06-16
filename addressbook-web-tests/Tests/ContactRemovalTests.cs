@@ -9,36 +9,34 @@ namespace AddressbookWebTests
 {
     [TestFixture]
     class ContactRemovalTests : TestBase
-    {
-
-        //Такой код не смог заставить работать
-        /*[TestFixtureSetUp]
-        public void Setup()
+    {        
+        [SetUp]
+        public void BeforeTest()
         {
-            ContactData contact = new ContactData
+            if (true)
             {
-                Name = "Name",
-                LastName = "LastName"
-            };
+                ContactData contact = new ContactData
+                {
+                    Name = "Name",
+                    LastName = "LastName"
+                };
 
-            mngr.Contact.InitCreation();
-            mngr.Contact.FillForm(contact);
-            mngr.Contact.SubmitCreation();
-        }*/
+                mngr.Contact.InitCreation();
+                mngr.Contact.FillForm(contact);
+                mngr.Contact.SubmitCreation();
+                mngr.Navigator.GoToHomePage(); 
+            }
+        }
 
         [Test]
         public void ContactRemoveTest()
         {
-            ContactData contact = new ContactData
-            {
-                Name = "Name",
-                LastName = "LastName"
-            };
+            mngr.Contact.Remove(1);
+        }
 
-            mngr.Contact.InitCreation();
-            mngr.Contact.FillForm(contact);
-            mngr.Contact.SubmitCreation();
-
+        [Test]
+        public void ContactRemoveTest1()
+        {
             mngr.Contact.Remove(1);
         }
     }
