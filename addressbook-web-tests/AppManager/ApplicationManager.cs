@@ -28,7 +28,7 @@ namespace AddressbookWebTests
 
         public ApplicationManager()
         {
-            driver = new ChromeDriver();
+            driver = new FirefoxDriver();
             baseURL = "http://localhost";
             session = new SessionHelper(this);
             contactHelper = new ContactHelper(this);

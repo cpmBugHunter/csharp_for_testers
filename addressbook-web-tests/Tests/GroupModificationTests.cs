@@ -8,7 +8,9 @@ namespace AddressbookWebTests
         [Test]
         public void GroupModifyTest()
         {
-            mngr.Group.Modify(1);
+            GroupData newGroup = new GroupData("Modified Group", "New header", "New footer");
+
+            mngr.Group.Modify(1, newGroup);
         }
     }
 }
