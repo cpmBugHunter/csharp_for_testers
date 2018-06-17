@@ -15,7 +15,11 @@ namespace AddressbookWebTests
             driver.FindElement(By.LinkText("add new")).Click();
             return this;
         }
-        
+
+        public bool IsPresent()
+        {
+            return IsElementPresent(By.XPath("//tr[@name='entry']"));            
+        }
 
         public ContactHelper FillForm(ContactData contact)
         {
@@ -32,6 +36,15 @@ namespace AddressbookWebTests
             return this;
         }
 
+        public ContactHelper Create(ContactData contact)
+        {
+            manager.Navigator.GoToHomePage();
+            InitCreation();
+            FillForm(contact);
+            SubmitCreation();
+            return this;
+        }
+
         public ContactHelper SubmitCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
@@ -39,8 +52,7 @@ namespace AddressbookWebTests
         }
 
         public ContactHelper InitModification(int index, ContactData newContact)
-        {
-           // "//tr[@name = "entry"][2]//img[@title ="Edit"]"
+        {           
             driver.FindElement(By.XPath("(//tr[@name='entry'])[" + index + "]//img[@title ='Edit']")).Click();
             return this;
         }

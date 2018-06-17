@@ -54,7 +54,9 @@ namespace AddressbookWebTests
         {
             if(!mngr.IsValueCreated)
             {
-                mngr.Value = new ApplicationManager();
+                ApplicationManager newInstance = new ApplicationManager();
+                newInstance.Navigator.GoToHomePage();
+                mngr.Value = newInstance;
             }
             return mngr.Value;
         }

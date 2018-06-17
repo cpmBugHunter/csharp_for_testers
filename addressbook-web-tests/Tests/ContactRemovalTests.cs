@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace AddressbookWebTests
 {
     [TestFixture]
-    class ContactRemovalTests : TestBase
+    class ContactRemovalTests : AuthTestBase
     {        
         [SetUp]
         public void BeforeTest()
         {
-            if (true)
+            if (!mngr.Contact.IsPresent())
             {
                 ContactData contact = new ContactData
                 {
@@ -21,9 +16,7 @@ namespace AddressbookWebTests
                     LastName = "LastName"
                 };
 
-                mngr.Contact.InitCreation();
-                mngr.Contact.FillForm(contact);
-                mngr.Contact.SubmitCreation();
+                mngr.Contact.Create(contact);                
                 mngr.Navigator.GoToHomePage(); 
             }
         }
@@ -32,12 +25,6 @@ namespace AddressbookWebTests
         public void ContactRemoveTest()
         {
             mngr.Contact.Remove(1);
-        }
-
-        [Test]
-        public void ContactRemoveTest1()
-        {
-            mngr.Contact.Remove(1);
-        }
+        }        
     }
 }

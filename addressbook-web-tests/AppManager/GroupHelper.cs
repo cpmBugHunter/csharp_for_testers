@@ -9,8 +9,13 @@ namespace AddressbookWebTests
 
         public GroupHelper(ApplicationManager manager) : base(manager)
         {            
-        }        
-        
+        }
+
+        public bool IsPresent()
+        {
+            return IsElementPresent(By.ClassName("group"));            
+        }
+
         public GroupHelper Create(GroupData group)
         {
             manager.Navigator.GoToGroupsPage();

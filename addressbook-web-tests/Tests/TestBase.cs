@@ -7,7 +7,7 @@ namespace AddressbookWebTests
         protected ApplicationManager mngr;
 
         [SetUp]
-        public void SetupTest()
+        public void SetupApplicationManager()
         {
             mngr = ApplicationManager.GetInstance();            
         }                
