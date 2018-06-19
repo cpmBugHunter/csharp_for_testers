@@ -29,7 +29,7 @@ namespace AddressbookWebTests
             ContactData newContact = new ContactData();
             newContact.EMail = "ModifiedMail@mail.org";
 
-            mngr.Contact.InitModification(1, newContact);
+            mngr.Contact.InitModification(1);
             mngr.Contact.FillForm(newContact);
             mngr.Contact.SubmitModification();
         }
