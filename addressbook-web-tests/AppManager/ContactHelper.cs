@@ -51,7 +51,7 @@ namespace AddressbookWebTests
             return this;
         }
 
-        public ContactHelper InitModification(int index, ContactData newContact)
+        public ContactHelper InitModification(int index)
         {           
             driver.FindElement(By.XPath("(//tr[@name='entry'])[" + index + "]//img[@title ='Edit']")).Click();
             return this;
