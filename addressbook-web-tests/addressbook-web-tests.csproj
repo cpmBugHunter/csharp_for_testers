@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="AppManager\ApplicationManager.cs" />
     <Compile Include="AppManager\ContactHelper.cs" />
+    <Compile Include="AppManager\DataGenerator.cs" />
     <Compile Include="AppManager\GroupHelper.cs" />
     <Compile Include="AppManager\HelperBase.cs" />
     <Compile Include="AppManager\NavigationHelper.cs" />

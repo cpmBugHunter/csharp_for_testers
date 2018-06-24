@@ -14,6 +14,7 @@ namespace AddressbookWebTests
         protected ContactHelper contactHelper;
         protected GroupHelper groupHelper;
         protected NavigationHelper navigator;
+        protected DataGenerator generator;
 
         //делаем менеджера многопоточным
         private static ThreadLocal<ApplicationManager> mngr = new ThreadLocal<ApplicationManager>();
@@ -24,6 +25,8 @@ namespace AddressbookWebTests
         public NavigationHelper Navigator { get => navigator; set => navigator = value; }
         public IWebDriver Driver { get => driver; set => driver = value; }
         public string BaseURL { get => baseURL; set => baseURL = value; }
+        public DataGenerator Generator { get => generator; set => generator = value; }
+
 
         //спрятали конструктор, чтобы вызывать его только через GetInstance()
         private ApplicationManager()
@@ -34,6 +37,7 @@ namespace AddressbookWebTests
             contactHelper = new ContactHelper(this);
             groupHelper = new GroupHelper(this);
             navigator = new NavigationHelper(this);
+            generator = new DataGenerator(this);
         }
 
         //destructor вызывается автоматически

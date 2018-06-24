@@ -1,6 +1,7 @@
 ﻿
 using NUnit.Framework;
 using OpenQA.Selenium;
+using System.Collections.Generic;
 
 namespace AddressbookWebTests
 {
@@ -24,14 +25,21 @@ namespace AddressbookWebTests
         }
 
         [Test]
-        public void ChangeContactEmailTest()
-        {
-            ContactData newContact = new ContactData();
-            newContact.EMail = "ModifiedMail@mail.org";
+        public void ChangeContactAddressTest()
+        {            
+            ContactData newContact = new ContactData
+            {
+                Address = $"New City, Street, b {mngr.Generator.GetRandomIntBetween(1, 100)}"
+            };
 
-            mngr.Contact.InitModification(1);
-            mngr.Contact.FillForm(newContact);
-            mngr.Contact.SubmitModification();
+            List<ContactData> oldContacts = mngr.Contact.GetList();
+            mngr.Contact.Modify(0, newContact);
+            List<ContactData> newContacts = mngr.Contact.GetList();
+            oldContacts.Add(newContact);
+            oldContacts.Sort();
+            newContacts.Sort();
+
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }

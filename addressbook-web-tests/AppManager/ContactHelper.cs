@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using OpenQA.Selenium;
 
 namespace AddressbookWebTests
@@ -36,6 +37,33 @@ namespace AddressbookWebTests
             return this;
         }
 
+        public ContactHelper Modify(int index, ContactData newContact)
+        {
+            InitModification(index);
+            FillForm(newContact);
+            SubmitModification();
+            manager.Navigator.GoToHomePage();
+            return this;
+        }
+
+        public List<ContactData> GetList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.GoToHomePage();
+            ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
+            foreach (IWebElement element in elements)
+            {
+                ContactData contact = new ContactData
+                {
+                    LastName = element.FindElement(By.XPath("./td[2]")).Text,
+                    Name = element.FindElement(By.XPath("./td[3]")).Text,
+                    Address = element.FindElement(By.XPath("./td[4]")).Text
+                };
+                contacts.Add(contact);
+            }
+            return contacts;
+        }
+
         public ContactHelper Create(ContactData contact)
         {
             manager.Navigator.GoToHomePage();
@@ -53,7 +81,7 @@ namespace AddressbookWebTests
 
         public ContactHelper InitModification(int index)
         {           
-            driver.FindElement(By.XPath("(//tr[@name='entry'])[" + index + "]//img[@title ='Edit']")).Click();
+            driver.FindElement(By.XPath("(//tr[@name='entry'])[" + (index+1) + "]//img[@title ='Edit']")).Click();
             return this;
         }
 
@@ -72,7 +100,7 @@ namespace AddressbookWebTests
         
         private ContactHelper Select(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
             return this;
         }
 
