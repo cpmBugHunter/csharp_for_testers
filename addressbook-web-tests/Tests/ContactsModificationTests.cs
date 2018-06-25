@@ -35,7 +35,7 @@ namespace AddressbookWebTests
             List<ContactData> oldContacts = mngr.Contact.GetList();
             mngr.Contact.Modify(0, newContact);
             List<ContactData> newContacts = mngr.Contact.GetList();
-            oldContacts.Add(newContact);
+            oldContacts[0].Address = newContact.Address;
             oldContacts.Sort();
             newContacts.Sort();
 

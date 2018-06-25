@@ -5,17 +5,17 @@ namespace AddressbookWebTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-        private string name = "";
-        private string middleName = "";
-        private string lastName = "";
-        private string company = "";
-        private string address = "";
-        private string homePhone = "";
-        private string workPhone = "";
-        private string mobilePhone = "";
-        private string eMail = "";
-        private string eMail2 = "";
-        private string eMail3 = "";
+        private string name;
+        private string middleName;
+        private string lastName;
+        private string company;
+        private string address;
+        private string homePhone;
+        private string workPhone;
+        private string mobilePhone;
+        private string eMail;
+        private string eMail2;
+        private string eMail3;
 
         public ContactData()
         {
