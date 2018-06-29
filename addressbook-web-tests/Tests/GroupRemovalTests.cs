@@ -9,24 +9,35 @@ namespace AddressbookWebTests
         [SetUp]
         public void BeforeTest()
         {
+            mngr.Navigator.GoToGroupsPage();
             if (!mngr.Group.IsPresent())
             {
                 GroupData group = new GroupData("To be removed");                
 
-                mngr.Group.Create(group);
-                mngr.Navigator.GoToHomePage();
+                mngr.Group.Create(group);                
             }
+            return;
         }
 
         [Test]
         public void GroupRemoveTest()
         {
             List<GroupData> oldGroups = mngr.Group.GetList();
-            mngr.Group.Remove(0);
-            List<GroupData> newGroups = mngr.Group.GetList();
-            oldGroups.RemoveAt(0);
 
+            mngr.Group.Remove(0);
+
+            Assert.AreEqual(oldGroups.Count - 1, mngr.Group.GetCount());
+
+            List<GroupData> newGroups = mngr.Group.GetList();
+
+            GroupData toBeRemoved = oldGroups[0];
+            oldGroups.RemoveAt(0);
             Assert.AreEqual(oldGroups, newGroups);
+
+            foreach (GroupData group in newGroups)
+            {
+                Assert.AreNotEqual(group.Id, toBeRemoved.Id);
+            }
         }        
     }
 }

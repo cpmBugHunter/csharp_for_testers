@@ -14,6 +14,9 @@ namespace AddressbookWebTests
 
             List<GroupData> oldGroups = mngr.Group.GetList();
             mngr.Group.Create(group);
+
+            Assert.AreEqual(oldGroups.Count + 1, mngr.Group.GetCount());
+
             List<GroupData> newGroups = mngr.Group.GetList();
             oldGroups.Add(group);
             oldGroups.Sort();
@@ -29,6 +32,9 @@ namespace AddressbookWebTests
 
             List<GroupData> oldGroups = mngr.Group.GetList();
             mngr.Group.Create(group);
+
+            Assert.AreEqual(oldGroups.Count + 1, mngr.Group.GetCount());
+
             List<GroupData> newGroups = mngr.Group.GetList();
             oldGroups.Add(group);
             oldGroups.Sort();
@@ -44,8 +50,10 @@ namespace AddressbookWebTests
 
             List<GroupData> oldGroups = mngr.Group.GetList();
             mngr.Group.Create(group);
-            List<GroupData> newGroups = mngr.Group.GetList();
-            oldGroups.Add(group);
+
+            Assert.AreEqual(oldGroups.Count + 1, mngr.Group.GetCount());
+
+            List<GroupData> newGroups = mngr.Group.GetList();            
             oldGroups.Sort();
             newGroups.Sort();
 

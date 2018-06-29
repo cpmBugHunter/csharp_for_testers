@@ -17,16 +17,30 @@ namespace AddressbookWebTests
             return IsElementPresent(By.ClassName("group"));            
         }
 
+        private List<GroupData> groupCache = null;
+
         public List<GroupData> GetList()
         {
-            List<GroupData> groups = new List<GroupData>();
-            manager.Navigator.GoToGroupsPage();
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
-            foreach (IWebElement element in elements)
+            if (groupCache == null)
             {
-                groups.Add(new GroupData(element.Text));
-            }
-            return groups;
+                groupCache = new List<GroupData>();
+                manager.Navigator.GoToGroupsPage();
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+                foreach (IWebElement element in elements)
+                {
+                    GroupData group = new GroupData(element.Text)
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    };                    
+                    groupCache.Add(group);
+                }
+            }            
+            return new List<GroupData>(groupCache);
+        }
+
+        public int GetCount()
+        {
+            return driver.FindElements(By.CssSelector("span.group")).Count;
         }
 
         public GroupHelper Create(GroupData group)
@@ -55,6 +69,7 @@ namespace AddressbookWebTests
             manager.Navigator.GoToGroupsPage();
             Select(index);
             Delete();
+            groupCache = null;
             manager.Navigator.ReturnToGroupsPage();
         }
 
@@ -82,6 +97,7 @@ namespace AddressbookWebTests
         public GroupHelper SubmitCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+            groupCache = null;
             return this;
         }
 
@@ -94,6 +110,7 @@ namespace AddressbookWebTests
         public GroupHelper SubmitModification()
         {
             driver.FindElement(By.Name("update")).Click();
+            groupCache = null;
             return this;
         }
 

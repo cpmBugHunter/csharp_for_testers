@@ -35,9 +35,9 @@ namespace AddressbookWebTests
             if (driver.Url == baseURL + "/addressbook/group.php"
                 && IsElementPresent(By.LinkText("group page")))
             {
-                return;
+                driver.FindElement(By.LinkText("group page")).Click(); ;
             }
-            driver.FindElement(By.LinkText("group page")).Click();
+            return;
         }
     }
 }

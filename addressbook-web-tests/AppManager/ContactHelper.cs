@@ -81,7 +81,7 @@ namespace AddressbookWebTests
 
         public ContactHelper InitModification(int index)
         {           
-            driver.FindElement(By.XPath("(//tr[@name='entry'])[" + (index+1) + "]//img[@title ='Edit']")).Click();
+            driver.FindElement(By.XPath("(//tr[@name='entry'])[" + (index + 1) + "]//img[@title ='Edit']")).Click();
             return this;
         }
 
@@ -100,7 +100,7 @@ namespace AddressbookWebTests
         
         private ContactHelper Select(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")).Click();
             return this;
         }
 
