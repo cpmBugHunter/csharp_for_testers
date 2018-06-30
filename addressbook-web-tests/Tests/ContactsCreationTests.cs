@@ -28,6 +28,9 @@ namespace AddressbookWebTests
 
             List<ContactData> oldContacts = mngr.Contact.GetList();
             mngr.Contact.Create(contact);
+
+            Assert.AreEqual(oldContacts.Count + 1, mngr.Contact.GetCount());
+
             List<ContactData> newContacts = mngr.Contact.GetList();
             oldContacts.Add(contact);
             oldContacts.Sort();

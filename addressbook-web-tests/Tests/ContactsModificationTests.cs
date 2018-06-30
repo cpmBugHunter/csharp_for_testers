@@ -34,6 +34,9 @@ namespace AddressbookWebTests
 
             List<ContactData> oldContacts = mngr.Contact.GetList();
             mngr.Contact.Modify(0, newContact);
+
+            Assert.AreEqual(oldContacts.Count, mngr.Contact.GetCount());
+
             List<ContactData> newContacts = mngr.Contact.GetList();
             oldContacts[0].Address = newContact.Address;
             oldContacts.Sort();

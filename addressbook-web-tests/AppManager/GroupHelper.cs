@@ -49,6 +49,7 @@ namespace AddressbookWebTests
             InitCreation();
             FillForm(group);
             SubmitCreation();
+            groupCache = null;
             manager.Navigator.ReturnToGroupsPage();
             return this;
         }

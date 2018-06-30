@@ -37,8 +37,14 @@ namespace AddressbookWebTests
             return this;
         }
 
+        public int GetCount()
+        {            
+            return driver.FindElements(By.Name("entry")).Count;
+        }
+
         public ContactHelper Modify(int index, ContactData newContact)
         {
+            manager.Navigator.GoToHomePage();
             InitModification(index);
             FillForm(newContact);
             SubmitModification();
@@ -46,22 +52,29 @@ namespace AddressbookWebTests
             return this;
         }
 
+        private List<ContactData> contactCache = null;
+
         public List<ContactData> GetList()
         {
-            List<ContactData> contacts = new List<ContactData>();
-            manager.Navigator.GoToHomePage();
-            ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
-            foreach (IWebElement element in elements)
+            if (contactCache == null)
             {
-                ContactData contact = new ContactData
+                contactCache = new List<ContactData>();
+                manager.Navigator.GoToHomePage();
+                ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
+                foreach (IWebElement element in elements)
                 {
-                    LastName = element.FindElement(By.XPath("./td[2]")).Text,
-                    Name = element.FindElement(By.XPath("./td[3]")).Text,
-                    Address = element.FindElement(By.XPath("./td[4]")).Text
-                };
-                contacts.Add(contact);
+                    ContactData contact = new ContactData
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("id"),
+                        LastName = element.FindElement(By.XPath("./td[2]")).Text,
+                        Name = element.FindElement(By.XPath("./td[3]")).Text,
+                        Address = element.FindElement(By.XPath("./td[4]")).Text
+                    };
+                    contactCache.Add(contact);
+                }
             }
-            return contacts;
+            
+            return contactCache;
         }
 
         public ContactHelper Create(ContactData contact)
@@ -70,12 +83,14 @@ namespace AddressbookWebTests
             InitCreation();
             FillForm(contact);
             SubmitCreation();
+            manager.Navigator.GoToHomePage();
             return this;
         }
 
         public ContactHelper SubmitCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -88,13 +103,17 @@ namespace AddressbookWebTests
         public ContactHelper SubmitModification()
         {
             driver.FindElement(By.Name("update")).Click();
+            contactCache = null;
             return this;
         }
 
         public ContactHelper Remove(int index)
         {
+            manager.Navigator.GoToHomePage();
             Select(index);
             Delete();
+            contactCache = null;
+            manager.Navigator.GoToHomePage();
             return this;
         }
         

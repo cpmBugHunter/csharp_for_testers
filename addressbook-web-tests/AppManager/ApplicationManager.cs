@@ -32,7 +32,7 @@ namespace AddressbookWebTests
         //спрятали конструктор, чтобы вызывать его только через GetInstance()
         private ApplicationManager()
         {
-            driver = new FirefoxDriver();
+            driver = new ChromeDriver();
             baseURL = "http://localhost";
             session = new SessionHelper(this);
             contactHelper = new ContactHelper(this);

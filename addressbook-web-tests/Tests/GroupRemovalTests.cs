@@ -23,17 +23,15 @@ namespace AddressbookWebTests
         public void GroupRemoveTest()
         {
             List<GroupData> oldGroups = mngr.Group.GetList();
-
             mngr.Group.Remove(0);
 
             Assert.AreEqual(oldGroups.Count - 1, mngr.Group.GetCount());
 
             List<GroupData> newGroups = mngr.Group.GetList();
-
             GroupData toBeRemoved = oldGroups[0];
             oldGroups.RemoveAt(0);
-            Assert.AreEqual(oldGroups, newGroups);
 
+            Assert.AreEqual(oldGroups, newGroups);
             foreach (GroupData group in newGroups)
             {
                 Assert.AreNotEqual(group.Id, toBeRemoved.Id);
