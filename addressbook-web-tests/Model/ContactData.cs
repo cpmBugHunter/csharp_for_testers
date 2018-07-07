@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace AddressbookWebTests
@@ -41,16 +42,34 @@ namespace AddressbookWebTests
             }
         }
 
-        private string CleanUp(string phone)
+        public string AllEmails
         {
-            if (string.IsNullOrEmpty(phone))
+            get
             {
-                return "";
+                if (allEmails != null)
+                {
+                    return allEmails;
+                }
+                else
+                {
+                    string[] emails = new string[] { EMail, EMail2, EMail3 };
+                    StringBuilder sb = new StringBuilder();
+                    foreach (var email in emails)
+                    {
+                        if (!string.IsNullOrEmpty(email))
+                        {
+                            sb.Append(email);
+                            sb.Append("\r\n");
+                        }
+                    }
+                    return sb.ToString().Trim();
+                }
             }
-            return Regex.Replace(phone, "[-( )]", "") + "\r\n";
-        }
-
-        public string AllEmails { get => allEmails; set => allEmails = value; }
+            set
+            {
+                allEmails = value;
+            }
+        }            
 
         public ContactData()
         {
@@ -75,7 +94,16 @@ namespace AddressbookWebTests
             EMail = eMail;
             EMail2 = eMail2;
             EMail3 = eMail3;
-        }        
+        }
+
+        private string CleanUp(string phone)
+        {
+            if (string.IsNullOrEmpty(phone))
+            {
+                return "";
+            }
+            return Regex.Replace(phone, "[-( )]", "") + "\r\n";
+        }
 
         public int CompareTo(ContactData other)
         {
