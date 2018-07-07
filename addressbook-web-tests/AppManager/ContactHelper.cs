@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using OpenQA.Selenium;
 
 namespace AddressbookWebTests
@@ -11,10 +12,60 @@ namespace AddressbookWebTests
         {                    
         }
 
-        public ContactHelper InitCreation()
+        public int GetSearchResultCount()
         {
-            driver.FindElement(By.LinkText("add new")).Click();
-            return this;
+            manager.Navigator.GoToHomePage();
+            string count = driver.FindElement(By.TagName("label")).Text;
+            Match m = new Regex(@"\d+").Match(count);
+            return int.Parse(m.Value);
+        }
+        
+        public ContactData GetContactInfoFromTable(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index].FindElements(By.TagName("td"));
+            string lastName = cells[1].Text;
+            string firstName = cells[2].Text;
+            string address = cells[3].Text;
+            string allEmails = cells[4].Text;
+            string allPhones = cells[5].Text;
+            return new ContactData()
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Address = address,
+                AllPhones = allPhones,
+                AllEmails = allEmails
+            };           
+        }
+
+        public ContactData GetContactInfoFromEditForm(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            InitModification(index);
+
+            string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string lastname = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
+            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+            string email = driver.FindElement(By.Name("email")).GetAttribute("value");
+            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
+            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+
+            return new ContactData()
+            {
+                FirstName = firstName,
+                LastName = lastname,
+                Address = address,
+                HomePhone = homePhone,
+                MobilePhone = mobilePhone,
+                WorkPhone = workPhone,
+                EMail = email,
+                EMail2 = email2,
+                EMail3 = email3
+            };
         }
 
         public bool IsPresent()
@@ -24,7 +75,7 @@ namespace AddressbookWebTests
 
         public ContactHelper FillForm(ContactData contact)
         {
-            Type(By.Name("firstname"), contact.Name);
+            Type(By.Name("firstname"), contact.FirstName);
             Type(By.Name("lastname"), contact.LastName);
             Type(By.Name("address"), contact.Address);
             Type(By.Name("home"), contact.HomePhone);
@@ -67,7 +118,7 @@ namespace AddressbookWebTests
                     {
                         Id = element.FindElement(By.TagName("input")).GetAttribute("id"),
                         LastName = element.FindElement(By.XPath("./td[2]")).Text,
-                        Name = element.FindElement(By.XPath("./td[3]")).Text,
+                        FirstName = element.FindElement(By.XPath("./td[3]")).Text,
                         Address = element.FindElement(By.XPath("./td[4]")).Text
                     };
                     contactCache.Add(contact);
@@ -87,6 +138,12 @@ namespace AddressbookWebTests
             return this;
         }
 
+        public ContactHelper InitCreation()
+        {
+            driver.FindElement(By.LinkText("add new")).Click();
+            return this;
+        }
+
         public ContactHelper SubmitCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
@@ -96,7 +153,7 @@ namespace AddressbookWebTests
 
         public ContactHelper InitModification(int index)
         {           
-            driver.FindElement(By.XPath("(//tr[@name='entry'])[" + (index + 1) + "]//img[@title ='Edit']")).Click();
+            driver.FindElement(By.XPath($"(//tr[@name='entry'])[{index + 1}]//img[@title ='Edit']")).Click();            
             return this;
         }
 
@@ -119,7 +176,7 @@ namespace AddressbookWebTests
         
         private ContactHelper Select(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")).Click();
+            driver.FindElement(By.XPath($"(//input[@name='selected[]'])[{index + 1}]")).Click();
             return this;
         }
 

@@ -15,7 +15,7 @@ namespace AddressbookWebTests
             numbers = mngr.Generator.GetRandomIntBetween(1, 100);
             ContactData contact = new ContactData()
             {
-                Name = "John",
+                FirstName = "John",
                 LastName = "Galt",
                 Address = $"City, Street, b {numbers}, ap.{mngr.Generator.GetRandomIntBetween(1, 100)}",
                 HomePhone = $"{numbers}{mngr.Generator.GetRandomIntBetween(1, 100)}",

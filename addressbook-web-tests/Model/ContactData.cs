@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace AddressbookWebTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
+        private string allPhones;
+        private string allEmails;
+
         public string Id { get; set; }
-        public string Name { get; set; }
+        public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public string Company { get; set; }
@@ -17,6 +21,36 @@ namespace AddressbookWebTests
         public string EMail { get; set; }
         public string EMail2 { get; set; }
         public string EMail3 { get; set; }
+
+        public string AllPhones
+        {
+            get
+            {
+                if (allPhones != null)
+                {
+                    return allPhones;
+                }
+                else
+                {
+                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone)).Trim();
+                }
+            }
+            set
+            {
+                allPhones = value;
+            }
+        }
+
+        private string CleanUp(string phone)
+        {
+            if (string.IsNullOrEmpty(phone))
+            {
+                return "";
+            }
+            return Regex.Replace(phone, "[-( )]", "") + "\r\n";
+        }
+
+        public string AllEmails { get => allEmails; set => allEmails = value; }
 
         public ContactData()
         {
@@ -32,7 +66,7 @@ namespace AddressbookWebTests
             string eMail2,
             string eMail3)
         {
-            Name = name;            
+            FirstName = name;            
             LastName = lastName;            
             Address = address;
             HomePhone = homePhone;
@@ -49,7 +83,7 @@ namespace AddressbookWebTests
             {
                 return 1;
             }
-            return Name.CompareTo(other.Name);
+            return FirstName.CompareTo(other.FirstName);
         }        
 
         public bool Equals(ContactData other)
@@ -62,7 +96,7 @@ namespace AddressbookWebTests
             {
                 return true;
             }
-            return Name == other.Name
+            return FirstName == other.FirstName
                 && LastName == other.LastName
                 && Address == other.Address;
                 //&& HomePhone == other.HomePhone
@@ -76,7 +110,7 @@ namespace AddressbookWebTests
         public override int GetHashCode()
         {
             var hashCode = 1257958748;
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(FirstName);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(LastName);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Address);
             //hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(HomePhone);
@@ -90,7 +124,7 @@ namespace AddressbookWebTests
 
         public override string ToString()
         {
-            return $"ContactData{{name = {Name}, " +
+            return $"ContactData{{name = {FirstName}, " +
                 $"lastName = {LastName}, " +
                 $"address = {Address}, " +
                 $"homePhone = {HomePhone}, " +
