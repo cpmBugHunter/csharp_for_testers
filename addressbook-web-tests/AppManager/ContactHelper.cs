@@ -39,6 +39,18 @@ namespace AddressbookWebTests
             };           
         }
 
+        public string GetInfoFromDetails(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            ViewDetails(index);
+            return driver.FindElement(By.Id("content")).Text;            
+        }
+
+        public void ViewDetails(int index)
+        {
+            driver.FindElement(By.XPath($"(//tr[@name='entry'])[{index + 1}]//img[@title ='Details']")).Click();            
+        }
+
         public ContactData GetContactInfoFromEditForm(int index)
         {
             manager.Navigator.GoToHomePage();

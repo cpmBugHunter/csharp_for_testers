@@ -73,37 +73,8 @@ namespace AddressbookWebTests
 
         public ContactData()
         {
-        }        
+        }              
 
-        public ContactData(string name,            
-            string lastName,            
-            string address,
-            string homePhone,
-            string workPhone,
-            string mobilePhone,
-            string eMail,
-            string eMail2,
-            string eMail3)
-        {
-            FirstName = name;            
-            LastName = lastName;            
-            Address = address;
-            HomePhone = homePhone;
-            WorkPhone = workPhone;
-            MobilePhone = mobilePhone;
-            EMail = eMail;
-            EMail2 = eMail2;
-            EMail3 = eMail3;
-        }
-
-        private string CleanUp(string phone)
-        {
-            if (string.IsNullOrEmpty(phone))
-            {
-                return "";
-            }
-            return Regex.Replace(phone, "[-( )]", "") + "\r\n";
-        }
 
         public int CompareTo(ContactData other)
         {
@@ -161,6 +132,15 @@ namespace AddressbookWebTests
                 $"email = {EMail}, " +
                 $"email2 = {EMail2}, " +
                 $"email3 = {EMail3}}}";
+        }
+
+        private string CleanUp(string phone)
+        {
+            if (string.IsNullOrEmpty(phone))
+            {
+                return "";
+            }
+            return Regex.Replace(phone, "[-( )]", "") + "\r\n";
         }
     }
 }
