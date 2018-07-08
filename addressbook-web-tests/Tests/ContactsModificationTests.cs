@@ -29,7 +29,7 @@ namespace AddressbookWebTests
         {            
             ContactData newContact = new ContactData
             {
-                Address = $"New City, Street, b {mngr.Generator.GetRandomIntBetween(1, 100)}"
+                Address = $"New City, Street, b {DataGenerator.GetRandomIntBetween(1, 100)}"
             };
 
             List<ContactData> oldContacts = mngr.Contact.GetList();

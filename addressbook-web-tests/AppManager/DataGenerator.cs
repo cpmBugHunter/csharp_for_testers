@@ -1,23 +1,26 @@
 ﻿using System;
+using System.Text;
 
 namespace AddressbookWebTests
 {
     public class DataGenerator
     {
-        private Random random;
-        private ApplicationManager manager;
+        private static Random random = new Random();
 
-        public DataGenerator(ApplicationManager manager)
+        public static int GetRandomIntBetween(int from, int to)
         {
-            this.manager = manager;
-            random = new Random();
+            return random.Next(from, to);
         }
 
-        public Random Random { get => random; set => random = value; }
-
-        public int GetRandomIntBetween(int from, int to)
+        public static string GenerateRandomString(int max)
         {
-            return Random.Next(from, to);
+            StringBuilder sb = new StringBuilder();
+            int l = GetRandomIntBetween(0, max);
+            for (int i = 0; i < l; i++)
+            {
+                sb.Append(Convert.ToChar(32 + Convert.ToInt32(random.NextDouble() * 223)));
+            }
+            return sb.ToString();
         }
     }
 }

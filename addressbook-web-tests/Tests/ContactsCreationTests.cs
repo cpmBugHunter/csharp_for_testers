@@ -7,24 +7,35 @@ namespace AddressbookWebTests
     [TestFixture]
     public class ContactsCreationTests : AuthTestBase
     {
-        private int numbers;
-
-        [Test]
-        public void ContactCreationTest()
+        private static int numbers;
+        public static IEnumerable<ContactData> RandomContactDataProvider()
         {
-            numbers = mngr.Generator.GetRandomIntBetween(1, 100);
-            ContactData contact = new ContactData()
+            List<ContactData> groups = new List<ContactData>();
+            for (int i = 0; i < 5; i++)
             {
-                FirstName = "John",
-                LastName = "Galt",
-                Address = $"City, Street, b {numbers}, ap.{mngr.Generator.GetRandomIntBetween(1, 100)}",
-                HomePhone = $"{numbers}{mngr.Generator.GetRandomIntBetween(1, 100)}",
-                WorkPhone = $"{numbers}-{mngr.Generator.GetRandomIntBetween(1, 500)}",
-                MobilePhone = $"{numbers}-{numbers}-{mngr.Generator.GetRandomIntBetween(1, 1000)}",
-                EMail = "Main@mail.net",
-                EMail2 = "Mail2@mail.net",
-                EMail3 = "Mail3@mail.net"
-            };
+                numbers = DataGenerator.GetRandomIntBetween(1, 100);
+                groups.Add(new ContactData()
+                {
+                    FirstName = DataGenerator.GenerateRandomString(10),
+                    LastName = DataGenerator.GenerateRandomString(15),
+                    Address = $"{DataGenerator.GenerateRandomString(10)}," +
+                    $"{DataGenerator.GenerateRandomString(15)}," +
+                    $"b {numbers}, ap.{DataGenerator.GetRandomIntBetween(1, 100)}",
+                    HomePhone = $"{numbers}{DataGenerator.GetRandomIntBetween(1, 100)}",
+                    WorkPhone = $"{numbers}-{DataGenerator.GetRandomIntBetween(1, 500)}",
+                    MobilePhone = $"{numbers}-{numbers}-{DataGenerator.GetRandomIntBetween(1, 1000)}",
+                    EMail = DataGenerator.GenerateRandomString(15),
+                    EMail2 = DataGenerator.GenerateRandomString(15),
+                    EMail3 = DataGenerator.GenerateRandomString(15)
+                });
+
+            }
+            return groups;
+        }
+
+        [Test, TestCaseSource("RandomContactDataProvider")]
+        public void ContactCreationTest(ContactData contact)
+        {   
 
             List<ContactData> oldContacts = mngr.Contact.GetList();
             mngr.Contact.Create(contact);
