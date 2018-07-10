@@ -1,11 +1,28 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
+using System.IO;
 
 namespace AddressbookWebTests
 {
     [TestFixture]
     public class GroupCreationTests : AuthTestBase
-    {        
+    {
+        public static IEnumerable<GroupData> GroupDataFromCsv()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            string[] lines = File.ReadAllLines("groups.csv");
+            foreach (var l in lines)
+            {
+                string[] parts = l.Split(',');
+                groups.Add(new GroupData(parts[0])
+                {
+                    Header = parts[1],
+                    Footer = parts[2]
+                });
+            } 
+            return groups;
+        }
+
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
             List<GroupData> groups = new List<GroupData>();
@@ -21,7 +38,7 @@ namespace AddressbookWebTests
             return groups;
         }
 
-        [Test, TestCaseSource("RandomGroupDataProvider")]
+        [Test, TestCaseSource("GroupDataFromCsv")]
         public void GroupCreationTest(GroupData group)
         {            
             List<GroupData> oldGroups = mngr.Group.GetList();

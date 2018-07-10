@@ -8,13 +8,19 @@ namespace AddressbookWebTests
     public class ContactsCreationTests : AuthTestBase
     {
         private static int numbers;
+
+        public static IEnumerable<ContactData> ContactDataFromFile()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            return contacts;
+        }
         public static IEnumerable<ContactData> RandomContactDataProvider()
         {
-            List<ContactData> groups = new List<ContactData>();
+            List<ContactData> contacts = new List<ContactData>();
             for (int i = 0; i < 5; i++)
             {
                 numbers = DataGenerator.GetRandomIntBetween(1, 100);
-                groups.Add(new ContactData()
+                contacts.Add(new ContactData()
                 {
                     FirstName = DataGenerator.GenerateRandomString(10),
                     LastName = DataGenerator.GenerateRandomString(15),
@@ -30,7 +36,7 @@ namespace AddressbookWebTests
                 });
 
             }
-            return groups;
+            return contacts;
         }
 
         [Test, TestCaseSource("RandomContactDataProvider")]

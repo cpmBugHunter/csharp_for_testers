@@ -18,7 +18,7 @@ namespace AddressbookWebTests
             int l = GetRandomIntBetween(0, max);
             for (int i = 0; i < l; i++)
             {
-                sb.Append(Convert.ToChar(32 + Convert.ToInt32(random.NextDouble() * 223)));
+                sb.Append(Convert.ToChar(32 + Convert.ToInt32(random.NextDouble() * 65)));
             }
             return sb.ToString();
         }
