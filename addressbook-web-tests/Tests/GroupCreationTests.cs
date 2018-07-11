@@ -1,12 +1,20 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace AddressbookWebTests
 {
     [TestFixture]
     public class GroupCreationTests : AuthTestBase
     {
+        public static IEnumerable<GroupData> GroupDataFromXml()
+        {
+            return (List<GroupData>) new XmlSerializer(typeof(List<GroupData>))
+                .Deserialize(new StreamReader("groups.xml"));            
+        }
+
         public static IEnumerable<GroupData> GroupDataFromCsv()
         {
             List<GroupData> groups = new List<GroupData>();
@@ -38,7 +46,7 @@ namespace AddressbookWebTests
             return groups;
         }
 
-        [Test, TestCaseSource("GroupDataFromCsv")]
+        [Test, TestCaseSource("GroupDataFromXml")]
         public void GroupCreationTest(GroupData group)
         {            
             List<GroupData> oldGroups = mngr.Group.GetList();

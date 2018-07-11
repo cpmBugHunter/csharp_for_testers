@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 namespace AddressbookWebTests
 {
     public class GroupData : IEquatable<GroupData>, IComparable<GroupData>
-    {       
+    {
+        public GroupData()
+        {
+        }
 
         public GroupData(string name)
         {
