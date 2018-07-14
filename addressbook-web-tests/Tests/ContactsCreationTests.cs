@@ -1,6 +1,9 @@
-﻿using NUnit.Framework;
+﻿using Newtonsoft.Json;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace AddressbookWebTests
 {
@@ -8,11 +11,33 @@ namespace AddressbookWebTests
     public class ContactsCreationTests : AuthTestBase
     {
         private static int numbers;
+        
+        [Test, TestCaseSource("ContactDataFromJson")]
+        public void ContactCreationTest(ContactData contact)
+        {   
 
-        public static IEnumerable<ContactData> ContactDataFromFile()
+            List<ContactData> oldContacts = mngr.Contact.GetList();
+            mngr.Contact.Create(contact);
+
+            Assert.AreEqual(oldContacts.Count + 1, mngr.Contact.GetCount());
+
+            List<ContactData> newContacts = mngr.Contact.GetList();
+            oldContacts.Add(contact);
+            oldContacts.Sort();
+            newContacts.Sort();
+
+            Assert.AreEqual(oldContacts, newContacts);
+        }
+
+        public static IEnumerable<ContactData> ContactDataFromJson()
         {
-            List<ContactData> contacts = new List<ContactData>();
-            return contacts;
+            return JsonConvert.DeserializeObject<List<ContactData>>(File.ReadAllText("contacts.json"));
+        }
+
+        public static IEnumerable<ContactData> ContactDataFromXml()
+        {
+            return (List<ContactData>)new XmlSerializer(typeof(List<ContactData>))
+                .Deserialize(new StreamReader("contacts.xml"));
         }
         public static IEnumerable<ContactData> RandomContactDataProvider()
         {
@@ -39,22 +64,5 @@ namespace AddressbookWebTests
             return contacts;
         }
 
-        [Test, TestCaseSource("RandomContactDataProvider")]
-        public void ContactCreationTest(ContactData contact)
-        {   
-
-            List<ContactData> oldContacts = mngr.Contact.GetList();
-            mngr.Contact.Create(contact);
-
-            Assert.AreEqual(oldContacts.Count + 1, mngr.Contact.GetCount());
-
-            List<ContactData> newContacts = mngr.Contact.GetList();
-            oldContacts.Add(contact);
-            oldContacts.Sort();
-            newContacts.Sort();
-
-            Assert.AreEqual(oldContacts, newContacts);
-        }                              
-                
     }
 }
