@@ -1,24 +1,25 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
-using System.Xml;
+using System;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace AddressbookWebTests
 {
     [TestFixture]
-    public class GroupCreationTests : AuthTestBase
+    public class GroupCreationTests : GroupTestBase
     {
         [Test, TestCaseSource("GroupDataFromJson")]
         public void GroupCreationTest(GroupData group)
         {            
-            List<GroupData> oldGroups = mngr.Group.GetList();
+            List<GroupData> oldGroups = GroupData.GetAll();
             mngr.Group.Create(group);
 
             Assert.AreEqual(oldGroups.Count + 1, mngr.Group.GetCount());
 
-            List<GroupData> newGroups = mngr.Group.GetList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
@@ -30,7 +31,6 @@ namespace AddressbookWebTests
         public void EmptyGroupCreationTest()
         {
             GroupData group = new GroupData("");
-
             List<GroupData> oldGroups = mngr.Group.GetList();
             mngr.Group.Create(group);
 
@@ -45,10 +45,24 @@ namespace AddressbookWebTests
         }
 
         [Test]
+        public void DbConnectivityTest()
+        {
+            DateTime start = DateTime.Now;
+            GroupData group = new GroupData("");
+            List<GroupData> fromUi = mngr.Group.GetList();
+            DateTime end = DateTime.Now;
+            Console.Out.WriteLine($"Get groups from UI time = {end.Subtract(start)}, items quantity = {fromUi.Count}");
+
+            start = DateTime.Now;
+            List<GroupData> fromDb = GroupData.GetAll();            
+            end = DateTime.Now;
+            Console.Out.WriteLine($"Get groups from DB time = {end.Subtract(start)}, items quantity = {fromDb.Count}");            
+        }
+
+        [Test]
         public void BadNameGroupCreationTest()
         {
             GroupData group = new GroupData("a'a");
-
             List<GroupData> oldGroups = mngr.Group.GetList();
             mngr.Group.Create(group);
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace AddressbookWebTests
 {
     [TestFixture]
-    public class GroupModificationTests : AuthTestBase
+    public class GroupModificationTests : GroupTestBase
     {
         [SetUp]
         public void BeforeTest()

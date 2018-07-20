@@ -41,7 +41,7 @@ namespace AddressbookWebTests
         public int GetCount()
         {
             return driver.FindElements(By.CssSelector("span.group")).Count;
-        }
+        }       
 
         public GroupHelper Create(GroupData group)
         {
@@ -63,6 +63,15 @@ namespace AddressbookWebTests
             SubmitModification();
             manager.Navigator.ReturnToGroupsPage();
             return this;
+        }
+
+        public void Remove(GroupData group)
+        {
+            manager.Navigator.GoToGroupsPage();
+            Select(group.Id);
+            Delete();
+            groupCache = null;
+            manager.Navigator.ReturnToGroupsPage();
         }
 
         public void Remove(int index)
@@ -118,6 +127,12 @@ namespace AddressbookWebTests
         public GroupHelper Select(int index)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
+            return this;
+        }
+
+        public GroupHelper Select(string id)
+        {
+            driver.FindElement(By.XPath($"//input[@value='{id}']")).Click();
             return this;
         }
 

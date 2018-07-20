@@ -33,7 +33,7 @@ namespace AddressbookWebTests
         private ApplicationManager()
         {
             driver = new ChromeDriver();
-            baseURL = "http://localhost";
+            baseURL = "http://localhost:81";
             session = new SessionHelper(this);
             contactHelper = new ContactHelper(this);
             groupHelper = new GroupHelper(this);
