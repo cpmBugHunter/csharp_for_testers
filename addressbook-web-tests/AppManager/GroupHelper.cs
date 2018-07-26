@@ -65,6 +65,17 @@ namespace AddressbookWebTests
             return this;
         }
 
+        public GroupHelper Modify(GroupData toBeModified, GroupData newGroup)
+        {
+            manager.Navigator.GoToGroupsPage();
+            Select(toBeModified.Id);
+            InitModification();
+            FillForm(newGroup);
+            SubmitModification();
+            manager.Navigator.ReturnToGroupsPage();
+            return this;
+        }
+
         public void Remove(GroupData group)
         {
             manager.Navigator.GoToGroupsPage();

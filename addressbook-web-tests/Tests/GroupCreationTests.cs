@@ -75,6 +75,7 @@ namespace AddressbookWebTests
             Assert.AreEqual(oldGroups, newGroups);
         }
 
+
         //Data providers
         public static IEnumerable<GroupData> GroupDataFromJson()
         {

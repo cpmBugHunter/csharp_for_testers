@@ -2,25 +2,50 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using LinqToDB.Mapping;
 
 namespace AddressbookWebTests
 {
+    [Table(Name = "addressbook")]
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string allPhones;
         private string allEmails;
 
+        [Column(Name = "id"), Identity, PrimaryKey]
         public string Id { get; set; }
+
+        [Column(Name = "firstname")]
         public string FirstName { get; set; }
+
+        [Column(Name = "middlename")]
         public string MiddleName { get; set; }
+
+        [Column(Name = "lastname")]
         public string LastName { get; set; }
+
+        [Column(Name = "company")]
         public string Company { get; set; }
+
+        [Column(Name = "address")]
         public string Address { get; set; }
+
+        [Column(Name = "home")]
         public string HomePhone { get; set; }
+
+        [Column(Name = "work")]
         public string WorkPhone { get; set; }
+
+        [Column(Name = "mobile")]
         public string MobilePhone { get; set; }
+
+        [Column(Name = "email")]
         public string EMail { get; set; }
+
+        [Column(Name = "email2")]
         public string EMail2 { get; set; }
+
+        [Column(Name = "email3")]
         public string EMail3 { get; set; }
 
         public string AllPhones
@@ -123,7 +148,7 @@ namespace AddressbookWebTests
 
         public override string ToString()
         {
-            return $"ContactData{{name = {FirstName}, " +
+            return $"ContactData{{ name = {FirstName}, " +
                 $"lastName = {LastName}, " +
                 $"address = {Address}, " +
                 $"homePhone = {HomePhone}, " +
@@ -131,7 +156,7 @@ namespace AddressbookWebTests
                 $"mobilePhone = {MobilePhone}," +
                 $"email = {EMail}, " +
                 $"email2 = {EMail2}, " +
-                $"email3 = {EMail3}}}";
+                $"email3 = {EMail3} }}";
         }
 
         private string CleanUp(string phone)
