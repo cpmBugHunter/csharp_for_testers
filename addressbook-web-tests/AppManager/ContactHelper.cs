@@ -176,6 +176,16 @@ namespace AddressbookWebTests
             return this;
         }
 
+        public ContactHelper Remove(ContactData contact)
+        {
+            manager.Navigator.GoToHomePage();
+            Select(contact);
+            Delete();
+            contactCache = null;
+            manager.Navigator.GoToHomePage();
+            return this;
+        }
+
         public ContactHelper Remove(int index)
         {
             manager.Navigator.GoToHomePage();
@@ -185,7 +195,13 @@ namespace AddressbookWebTests
             manager.Navigator.GoToHomePage();
             return this;
         }
-        
+
+        private ContactHelper Select(ContactData contact)
+        {
+            driver.FindElement(By.XPath($"//input[@value='{contact.Id}']")).Click();
+            return this;
+        }
+
         private ContactHelper Select(int index)
         {
             driver.FindElement(By.XPath($"(//input[@name='selected[]'])[{index + 1}]")).Click();

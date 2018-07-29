@@ -110,6 +110,7 @@
     <Compile Include="Model\AccountData.cs" />
     <Compile Include="Model\AddressBookDB.cs" />
     <Compile Include="Model\ContactData.cs" />
+    <Compile Include="Model\GroupContactRelations.cs" />
     <Compile Include="Tests\AuthTestBase.cs" />
     <Compile Include="Tests\ContactInformationTests.cs" />
     <Compile Include="Tests\ContactRemovalTests.cs" />

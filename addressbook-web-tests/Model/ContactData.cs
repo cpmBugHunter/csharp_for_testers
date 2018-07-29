@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using LinqToDB.Mapping;
+using System.Linq;
 
 namespace AddressbookWebTests
 {
@@ -47,6 +48,19 @@ namespace AddressbookWebTests
 
         [Column(Name = "email3")]
         public string EMail3 { get; set; }
+
+
+        public ContactData()
+        {
+        }
+
+        public static List<ContactData> GetAll()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from c in db.Contacts select c).ToList();
+            };
+        }
 
         public string AllPhones
         {
@@ -94,13 +108,8 @@ namespace AddressbookWebTests
             {
                 allEmails = value;
             }
-        }            
-
-        public ContactData()
-        {
-        }              
-
-
+        }
+        
         public int CompareTo(ContactData other)
         {
             if (object.ReferenceEquals(other, null))
