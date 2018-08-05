@@ -13,8 +13,25 @@ namespace AddressbookWebTests
         private static int numbers;
         
         [Test, TestCaseSource("ContactDataFromJson")]
-        public void ContactCreationTest(ContactData contact)
+        public void ContactCreationDbTest(ContactData contact)
         {   
+
+            List<ContactData> oldContacts = ContactData.GetAll();
+            mngr.Contact.Create(contact);
+
+            Assert.AreEqual(oldContacts.Count + 1, mngr.Contact.GetCount());
+
+            List<ContactData> newContacts = ContactData.GetAll();
+            oldContacts.Add(contact);
+            oldContacts.Sort();
+            newContacts.Sort();
+
+            Assert.AreEqual(oldContacts, newContacts);
+        }
+
+        [Test, TestCaseSource("ContactDataFromJson")]
+        public void ContactCreationUiTest(ContactData contact)
+        {
 
             List<ContactData> oldContacts = mngr.Contact.GetList();
             mngr.Contact.Create(contact);

@@ -105,6 +105,16 @@ namespace AddressbookWebTests
             return driver.FindElements(By.Name("entry")).Count;
         }
 
+        public ContactHelper Modify(ContactData contact, ContactData newContact)
+        {
+            manager.Navigator.GoToHomePage();
+            InitModification(contact);
+            FillForm(newContact);
+            SubmitModification();
+            manager.Navigator.GoToHomePage();
+            return this;
+        }
+
         public ContactHelper Modify(int index, ContactData newContact)
         {
             manager.Navigator.GoToHomePage();
@@ -160,6 +170,12 @@ namespace AddressbookWebTests
         {
             driver.FindElement(By.Name("submit")).Click();
             contactCache = null;
+            return this;
+        }
+
+        public ContactHelper InitModification(ContactData contact)
+        {
+            driver.FindElement(By.XPath($"//a[contains(@href, 'edit.php?id={contact.Id}')]")).Click();
             return this;
         }
 

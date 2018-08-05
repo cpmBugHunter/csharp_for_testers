@@ -26,12 +26,12 @@ namespace AddressbookWebTests
         public void ContactRemoveDbTest()
         {
             List<ContactData> oldContacts = ContactData.GetAll();
-            var toBeremoved = oldContacts[0];
-            mngr.Contact.Remove(toBeremoved);
+            var toBeRemoved = oldContacts[0];
+            mngr.Contact.Remove(toBeRemoved);
 
-            Assert.AreEqual(oldContacts.Count - 1, mngr.Contact.GetCount());
+            Assert.AreEqual(oldContacts.Count - 1, ContactData.GetAll().Count);
 
-            List<ContactData> newContacts = mngr.Contact.GetList();            
+            List<ContactData> newContacts = ContactData.GetAll();            
             oldContacts.RemoveAt(0);
             oldContacts.Sort();
             newContacts.Sort();
